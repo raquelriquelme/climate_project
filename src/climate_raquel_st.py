@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 from urllib.request import urlopen
-import json
 from copy import deepcopy
 st.set_page_config(layout="wide")
+
+
 # SAVE DATA IN CACHE
 @st.cache_data
 def load_data(path):
@@ -16,42 +17,16 @@ def load_data(path):
     return df
 
 # RAW COPY OF THE DATA
-df_raw = load_data(path="./data/renewable_power_plants_CH.csv")
-df = deepcopy(df_raw)
-
-# DATA CLEANING
-geojson = json.load(open("./data/georef-switzerland-kanton.geojson"))
-cantons_dict = {
-'TG':'Thurgau',
-'GR':'Graubünden',
-'LU':'Luzern',
-'BE':'Bern',
-'VS':'Valais',
-'BL':'Basel-Landschaft',
-'SO':'Solothurn',
-'VD':'Vaud',
-'SH':'Schaffhausen',
-'ZH':'Zürich',
-'AG':'Aargau',
-'UR':'Uri',
-'NE':'Neuchâtel',
-'TI':'Ticino',
-'SG':'St. Gallen',
-'GE':'Genève',
-'GL':'Glarus',
-'JU':'Jura',
-'ZG':'Zug',
-'OW':'Obwalden',
-'FR':'Fribourg',
-'SZ':'Schwyz',
-'AR':'Appenzell Ausserrhoden',
-'AI':'Appenzell Innerrhoden',
-'NW':'Nidwalden',
-'BS':'Basel-Stadt'}
-df['canton'] = df['canton'].map(cantons_dict)
-df['production/installed MW'] = df['production']/df['electrical_capacity']
-
-
+df_raw_car = load_data(path="../data/car_clean.csv")
+df_car = deepcopy(df_raw_car)
+df_raw_co2 = load_data(path="../data/co2_clean.csv")
+df_co2 = deepcopy(df_raw_co2)
+df_raw_oce = load_data(path="../data/oce_clean.csv")
+df_oce = deepcopy(df_raw_oce)
+df_raw_ter = load_data(path="../data/ter_clean.csv")
+df_ter = deepcopy(df_raw_ter)
+df_raw_wat = load_data(path="../data/wat_clean.csv")
+df_wat = deepcopy(df_raw_wat)
 
 # BEGINNING APP
 #st.title('Clean Energy Sources in Switzerland')
